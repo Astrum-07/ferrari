@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <title>soat</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #0b1020;
+      font-family: monospace;
+      color: #00ffcc;
+    }
+    .clock {
+      font-size: 60px;
+      font-weight: bold;
+      text-align: center;
+    }
+    .controls {
+      margin-top: 20px;
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+    }
+    button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+    }
+    .toggle {
+      background: #00ffcc;
+      color: #111;
+    }
+    .reset {
+      background: #ff4444;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <div>
+    <div id="clock" class="clock">00:00:00</div>
+    <div class="controls">
+      <button id="toggle" class="toggle">Start</button>
+      <button id="reset" class="reset">Reset</button>
+    </div>
+  </div>
+
+  <script>
+    const clock = document.getElementById("clock");
+    const toggleBtn = document.getElementById("toggle");
+    const resetBtn = document.getElementById("reset");
+
+    let running = false;
+    let paused = false;
+    let interval;
+
+    function updateClock() {
+      const now = new Date();
+      let h = String(now.getHours()).padStart(2, "0");
+      let m = String(now.getMinutes()).padStart(2, "0");
+      let s = String(now.getSeconds()).padStart(2, "0");
+      clock.textContent = `${h}:${m}:${s}`;
+    }
+
+    function startClock() {
+      if (!running) {
+        interval = setInterval(updateClock, 1000);
+        updateClock();
+        running = true;
+        paused = false;
+        toggleBtn.textContent = "Pause";
+      } else if (!paused) {
+        clearInterval(interval);
+        paused = true;
+        toggleBtn.textContent = "Resume";
+      } else {
+        interval = setInterval(updateClock, 1000);
+        paused = false;
+        toggleBtn.textContent = "Pause";
+      }
+    }
+
+    function resetClock() {
+      clearInterval(interval);
+      running = false;
+      paused = false;
+      clock.textContent = "00:00:00";
+      toggleBtn.textContent = "Start";
+    }
+
+    toggleBtn.addEventListener("click", startClock);
+    resetBtn.addEventListener("click", resetClock);
+  </script>
+</body>
+</html>

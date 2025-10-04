@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Masalalar To‘plami</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #001f3f; /* To‘q ko‘k fon */
+      color: #eee;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background: #111; /* qora header */
+      padding: 15px;
+      text-align: center;
+    }
+
+    header button {
+      background: #001f3f;
+      color: #eee;
+      border: 2px solid red;
+      padding: 10px 20px;
+      margin: 5px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    header button:hover {
+      background: red;
+      color: white;
+    }
+
+    .container {
+      display: none;
+      max-width: 500px;
+      margin: 30px auto;
+      padding: 20px;
+      background: #002b5c; /* ochroq ko‘k card */
+      border: 2px solid red;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    .container.active {
+      display: block;
+    }
+
+    h2 {
+      color: #ff4444;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0 15px 0;
+      border: 2px solid red;
+      border-radius: 8px;
+      font-size: 14px;
+      background: #001f3f;
+      color: #fff;
+      box-sizing: border-box;
+    }
+
+    button.solve {
+      background: #001f3f;
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      font-size: 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button.solve:hover {
+      background: red;
+    }
+
+    .result {
+      margin-top: 15px;
+      padding: 10px;
+      background: #003366;
+      border-left: 4px solid red;
+      border-radius: 6px;
+      font-weight: bold;
+      color: #eee;
+      word-wrap: break-word;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <button onclick="showTask(1)">Masala 1</button>
+    <button onclick="showTask(2)">Masala 2</button>
+    <button onclick="showTask(3)">Masala 3</button>
+    <button onclick="showTask(4)">Masala 4</button>
+  </header>
+
+  <!-- Masala 1 -->
+  <div class="container active" id="task1">
+    <h2>Masala 1</h2>
+    <p>Ikkita tartiblangan massivni qo‘shing va takroriy elementlarni olib tashlang.</p>
+    <input type="text" id="array1" placeholder="1-massiv: masalan 1,2,3">
+    <input type="text" id="array2" placeholder="2-massiv: masalan 2,3,4">
+    <button class="solve" onclick="solveTask1()">Yechimni ko‘rish</button>
+    <div class="result" id="result1"></div>
+  </div>
+
+  <!-- Masala 2 -->
+  <div class="container" id="task2">
+    <h2>Masala 2</h2>
+    <p>Berilgan satrdan birinchi va oxirgi elementni olib tashlab, qolganini bo‘shliq bilan qaytaring.</p>
+    <input type="text" id="stringInput" placeholder="Masalan: a,b,c,d">
+    <button class="solve" onclick="solveTask2()">Yechimni ko‘rish</button>
+    <div class="result" id="result2"></div>
+  </div>
+
+  <!-- Masala 3 -->
+  <div class="container" id="task3">
+    <h2>Masala 3</h2>
+    <p>Berilgan son raqamlarini teskari tartibda massiv ko‘rinishida qaytaring.</p>
+    <input type="number" id="numberInput" placeholder="Masalan: 348597">
+    <button class="solve" onclick="solveTask3()">Yechimni ko‘rish</button>
+    <div class="result" id="result3"></div>
+  </div>
+
+  <!-- Masala 4 -->
+  <div class="container" id="task4">
+    <h2>Masala 4</h2>
+    <p>Massivdan har ikkinchi elementni olib tashlang. Har doim birinchisini qoldiring.</p>
+    <input type="text" id="arrInput" placeholder="Masalan: 1,2,3,4,5,6">
+    <button class="solve" onclick="solveTask4()">Yechimni ko‘rish</button>
+    <div class="result" id="result4"></div>
+  </div>
+
+  <script>
+    // Sahifa almashtirish
+    function showTask(num) {
+      document.querySelectorAll('.container').forEach(el => el.classList.remove('active'));
+      document.getElementById('task' + num).classList.add('active');
+    }
+
+    // Masala 1
+    function solveTask1() {
+      let arr1 = document.getElementById("array1").value.trim();
+      let arr2 = document.getElementById("array2").value.trim();
+      if (!arr1 || !arr2) {
+        document.getElementById("result1").innerText = "Ikkala massivni ham kiriting!";
+        return;
+      }
+      arr1 = arr1.split(",").map(Number);
+      arr2 = arr2.split(",").map(Number);
+      let merged = [...new Set([...arr1, ...arr2])].sort((a, b) => a - b);
+      document.getElementById("result1").innerText = "Natija: [" + merged.join(", ") + "]";
+    }
+
+    // Masala 2
+    function solveTask2() {
+      let str = document.getElementById("stringInput").value.trim();
+      if (!str) {
+        document.getElementById("result2").innerText = "Satr kiriting!";
+        return;
+      }
+      let parts = str.split(",");
+      if (parts.length <= 2) {
+        document.getElementById("result2").innerText = "Natija: NULL";
+        return;
+      }
+      let result = parts.slice(1, -1).join(" ");
+      document.getElementById("result2").innerText = "Natija: " + result;
+    }
+
+    // Masala 3
+    function solveTask3() {
+      let num = document.getElementById("numberInput").value;
+      if (!num) {
+        document.getElementById("result3").innerText = "Son kiriting!";
+        return;
+      }
+      let result = num.split("").reverse().map(Number);
+      document.getElementById("result3").innerText = "Natija: [" + result.join(", ") + "]";
+    }
+
+    // Masala 4
+    function solveTask4() {
+      let arr = document.getElementById("arrInput").value.trim();
+      if (!arr) {
+        document.getElementById("result4").innerText = "Massiv kiriting!";
+        return;
+      }
+      arr = arr.split(",");
+      let result = arr.filter((_, i) => i % 2 === 0);
+      document.getElementById("result4").innerText = "Natija: [" + result.join(", ") + "]";
+    }
+  </script>
+</body>
+</html>

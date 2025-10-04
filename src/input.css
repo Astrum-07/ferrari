@@ -1,0 +1,19 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+@import "tailwindcss";
+
+* {
+  font-family: "Montserrat", sans-serif;
+}
+
+.mycontainer {
+  max-width: 1260px;
+  padding: 0px 30px;
+  margin: 0 auto;
+}
+@theme {
+  --breakpoint-xs: 280px;
+  --breakpoint-xr: 450px;
+  --breakpoint-xe: 550px;
+  --breakpoint-xd: 900px;
+  --breakpoint-lm: 1200px;
+}
